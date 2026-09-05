@@ -1,0 +1,459 @@
+/* ----------------------------------------------------------------------------
+   Base styles for the site. Plain CSS, no preprocessor.
+   Design tokens live in :root; tweak those first to re-skin the site.
+---------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------
+   Color scheme: follows the OS/browser preference.
+     - OS set to dark   -> dark
+     - OS set to light  -> light
+     - OS unset/unknown -> light
+
+   Note on the "unset" case: browsers do not expose a separate "no preference"
+   signal; a user who hasn't chosen reports as light (prefers-color-scheme:
+   no-preference was removed from the spec and never matches). So light is the
+   base, and an explicit dark preference overrides it. Pure CSS, no JS.
+
+   `color-scheme: light dark` themes native form controls, scrollbars, and the
+   canvas to match, and Safari/WebKit requires it to render dark controls.
+---------------------------------------------------------------------------- */
+
+:root {
+  /* Palettes, each value defined once. */
+  --light-bg: #ffffff;
+  --light-surface: #f6f7f9;
+  --light-text: #1a1d21;
+  --light-muted: #5b636c;
+  --light-accent: #2f6df0;
+  --light-accent-strong: #1f4fc2;
+  --light-border: #e4e7eb;
+
+  --dark-bg: #0f1115;
+  --dark-surface: #181b22;
+  --dark-text: #e7e9ee;
+  --dark-muted: #9aa3af;
+  --dark-accent: #5b8cff;
+  --dark-accent-strong: #7aa2ff;
+  --dark-border: #2a2f37;
+
+  /* Active theme: light base (also covers the unset case). */
+  --color-bg: var(--light-bg);
+  --color-surface: var(--light-surface);
+  --color-text: var(--light-text);
+  --color-muted: var(--light-muted);
+  --color-accent: var(--light-accent);
+  --color-accent-dark: var(--light-accent-strong);
+  --color-border: var(--light-border);
+
+  color-scheme: light dark;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+
+  --maxw: 64rem;
+  --radius: 0.625rem;
+}
+
+/* Explicit dark preference. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: var(--dark-bg);
+    --color-surface: var(--dark-surface);
+    --color-text: var(--dark-text);
+    --color-muted: var(--dark-muted);
+    --color-accent: var(--dark-accent);
+    --color-accent-dark: var(--dark-accent-strong);
+    --color-border: var(--dark-border);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--space-sm);
+}
+
+/* ---- Header / nav ------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-bg); /* fallback where color-mix is unsupported */
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px); /* Safari */
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.75rem;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--color-text);
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.nav a {
+  color: var(--color-muted);
+  font-weight: 500;
+  padding: var(--space-xs) 0;
+}
+
+.nav a:hover {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.nav a[aria-current="page"] {
+  color: var(--color-text);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+/* Hamburger button: hidden on desktop, shown under the breakpoint. */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 1.25rem;
+  height: 2px;
+  margin-inline: auto;
+  background: var(--color-text);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* ---- Layout primitives -------------------------------------------------- */
+
+main {
+  min-height: 60vh;
+}
+
+.section {
+  padding-block: var(--space-lg);
+}
+
+.hero {
+  padding-block: var(--space-lg);
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+  margin: 0 0 var(--space-sm);
+}
+
+.hero p {
+  font-size: 1.125rem;
+  color: var(--color-muted);
+  max-width: 36rem;
+  margin: 0 auto var(--space-md);
+}
+
+.button {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius);
+  transition: background 0.15s ease;
+}
+
+.button:hover {
+  background: var(--color-accent-dark);
+  text-decoration: none;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-border);
+}
+
+.button.secondary:hover {
+  background: var(--color-surface);
+}
+
+.button-row {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin: 0 0 var(--space-xs);
+}
+
+.lead {
+  color: var(--color-muted);
+  font-size: 1.125rem;
+  margin-top: 0;
+}
+
+/* ---- Article list ------------------------------------------------------- */
+
+.article-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.article-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.article-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+/* Text left, thumbnail right. A card with no thumbnail needs no special case:
+   the body is the only child and simply fills the row. */
+.article-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* min-width:0 overrides the flex default of min-width:auto, which would let a
+   long unbroken word push the thumbnail off the edge instead of wrapping. */
+.article-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.article-thumb {
+  flex: none;
+  width: 12rem;
+  height: 7.5rem;
+  object-fit: cover;
+  border-radius: var(--radius);
+  /* The file is 640px wide for sharpness on high-density screens; these box
+     dimensions are what it actually occupies. */
+}
+
+.article-card h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.article-card h2 a {
+  color: var(--color-text);
+}
+
+.article-card time {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.article-card p {
+  margin: 0.5rem 0 0;
+  color: var(--color-muted);
+}
+
+/* ---- Article body ------------------------------------------------------- */
+
+.prose {
+  max-width: 42rem;
+}
+
+.prose h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: var(--space-xs);
+}
+
+.prose .meta {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-md);
+}
+
+.prose p {
+  margin: 0 0 var(--space-sm);
+}
+
+/* Article images sit as bare <img> elements between paragraphs. The global img
+   rule sets no margin and .prose p carries no top margin, so body text ran
+   straight into the bottom edge of an image.
+
+   Symmetric, so the image is not lopsided: the preceding paragraph's smaller
+   bottom margin collapses into this one rather than stacking on top of it,
+   which leaves equal space above and below. */
+.prose img {
+  margin-block: var(--space-md);
+}
+
+/* ---- Contact ------------------------------------------------------------ */
+
+.contact-grid {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.contact-item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.contact-item h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.contact-item p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+/* ---- Resume ------------------------------------------------------------- */
+
+.download-row {
+  margin-top: var(--space-md);
+}
+
+.resume-embed {
+  display: block;
+  width: 100%;
+  height: 80vh;
+  min-height: 32rem;
+  margin-top: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+/* ---- Footer ------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-lg);
+  padding-block: var(--space-md);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ---- Mobile nav --------------------------------------------------------- */
+
+@media (max-width: 40rem) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .brand {
+    font-size: 1rem;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-xs) var(--space-sm);
+
+    /* Animated open/close, driven by the .is-open class toggled in main.ts */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.25s ease, opacity 0.25s ease;
+  }
+
+  .nav.is-open {
+    max-height: 16rem;
+    opacity: 1;
+  }
+
+  .nav a {
+    padding: var(--space-xs) 0;
+  }
+
+  /* A 12rem thumbnail leaves too little room for the heading on a phone, so it
+     shrinks and the gap tightens rather than the title wrapping awkwardly. */
+  .article-card {
+    gap: var(--space-sm);
+  }
+
+  .article-thumb {
+    width: 6rem;
+    height: 4.5rem;
+  }
+}

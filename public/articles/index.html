@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="theme-color"
+      content="#0f1115"
+      media="(prefers-color-scheme: dark)"
+    />
+    <title>Articles | Ryan Cheevers-Brown</title>
+    <meta name="description" content="Articles and writing." />
+    <link rel="stylesheet" href="/css/styles.css?v=2" />
+    <script type="module" src="/js/main.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/">Ryan Cheevers-Brown</a>
+        <button
+          class="nav-toggle"
+          data-nav-toggle
+          aria-label="Toggle menu"
+          aria-controls="nav-menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav class="nav" id="nav-menu" data-nav-menu aria-label="Primary">
+          <a href="/">Home</a>
+          <a href="/articles/">Articles</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section container">
+        <h1 class="page-title">Articles</h1>
+        <p class="lead">Writing, notes, and updates. Add new posts as folders.</p>
+
+        <!--
+          Each card is text on the left and an optional thumbnail on the right.
+          The .article-card-body wrapper is what lets the two sit side by side.
+
+          Thumbnails are alt="" on purpose: they repeat the article's lead image
+          and the heading link right beside them already says what the article
+          is, so describing them again would just make screen readers read every
+          entry twice. A card with no thumbnail simply lets the text run full
+          width -- see "Good News for Amtrak!", which has no images.
+        -->
+        <ul class="article-list">
+          <li class="article-card">
+            <div class="article-card-body">
+              <h2><a href="/articles/20260802_hank_green_ai/">Hank Green uses AI?!</a></h2>
+              <time datetime="2026-08-02">August 2, 2026</time>
+              <p>
+                Hank Green admits he has a problem with AI, and the world (on threads) jumps down his throat. 
+              </p>
+            </div>
+          </li>
+          <li class="article-card">
+            <div class="article-card-body">
+              <h2><a href="/articles/20240514_amtrak_hudson_line/">Amtrak: The Hudson Line</a></h2>
+              <time datetime="2024-05-14">May 14, 2024</time>
+              <p>
+                An article on the Amtrak Hudson Line.
+              </p>
+            </div>
+            <img class="article-thumb" src="/articles/20240514_amtrak_hudson_line/thumb-hudsonline.jpg"
+                 alt="" width="640" height="400" loading="lazy" decoding="async">
+          </li>
+          <li class="article-card">
+            <div class="article-card-body">
+              <h2><a href="/articles/20240501_amtrak_good_news/">Good News for Amtrak!</a></h2>
+              <time datetime="2024-05-14">May 1, 2024</time>
+              <p>
+                Finally, it looks like Amtrak is starting to catch a break.
+              </p>
+            </div>
+          </li>
+          <li class="article-card">
+            <div class="article-card-body">
+              <h2><a href="/articles/20240312_amtrak_lsl_viewliner_2/">Amtrak's Viewliner 2</a></h2>
+              <time datetime="2024-03-12">March 12, 2024</time>
+              <p>
+                The Amtrak Viewliner 2 is quiet and comfortable.
+              </p>
+            </div>
+            <img class="article-thumb" src="/articles/20240312_amtrak_lsl_viewliner_2/thumb-IMG_7084.jpg"
+                 alt="" width="640" height="400" loading="lazy" decoding="async">
+          </li>
+          <li class="article-card">
+            <div class="article-card-body">
+              <h2><a href="/articles/20240111_amtrak_acela/">Amtrak's Largest Train Order Ever</a></h2>
+              <time datetime="2024-03-12">March 12, 2024</time>
+              <p>
+                Amtrak is getting new trains!
+              </p>
+            </div>
+            <img class="article-thumb" src="/articles/20240111_amtrak_acela/thumb-IMG_6713.jpg"
+                 alt="" width="640" height="400" loading="lazy" decoding="async">
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; <span data-year>2026</span> Ryan Cheevers-Brown. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

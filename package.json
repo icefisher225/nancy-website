@@ -1,0 +1,16 @@
+{
+  "name": "nancy-website",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static site: HTML + CSS + TypeScript, deployed on Cloudflare Pages.",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "serve": "python3 -m http.server 8000 --directory public",
+    "clean": "rm -rf public/js"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "wrangler": "^4.95.0"
+  }
+}

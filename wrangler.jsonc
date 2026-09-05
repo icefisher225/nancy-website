@@ -1,0 +1,21 @@
+// Cloudflare Workers Builds config for this site.
+//
+// The Cloudflare project is a Workers Builds project (Pages sign-ups are now
+// provisioned on Workers). On each push it runs the build command
+// (`npm run build`, which compiles src/*.ts into public/js/) and then the
+// deploy command (`npx wrangler deploy` on main, `npx wrangler versions upload`
+// on other branches). Both read this file to learn what to deploy.
+//
+// This is an assets-only deploy: there is no Worker script (no `main`), just
+// the static contents of public/.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nancy-website",
+  "compatibility_date": "2026-05-30",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "./public"
+  }
+}

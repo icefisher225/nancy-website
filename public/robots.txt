@@ -1,0 +1,6 @@
+# robots.txt - https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Update the host once a custom domain is attached in Cloudflare.
+# Sitemap: https://REPLACE_WITH_YOUR_DOMAIN/sitemap.xml

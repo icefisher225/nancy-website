@@ -1,8 +1,9 @@
-# website
+# nancy-website
 
-This is where my personal website will live.
+Forked from [website](https://github.com/icefisher225/website) as a starting
+template for a blog.
 
-Static site built with **HTML + CSS + TypeScript**, deployed on **Cloudflare Pages**.
+Static site built with **HTML + CSS + TypeScript**.
 
 No framework and no bundler. TypeScript is compiled by `tsc` into plain ES
 modules the browser loads directly. Pages are hand-authored HTML.
@@ -84,26 +85,20 @@ OS settings render the matching theme on all three.
 To change the palette, edit the `--light-*` / `--dark-*` tokens at the top of
 `styles.css`; everything else references them.
 
-## Deployment (Cloudflare)
+## Deployment
 
-The repo is connected to a Cloudflare **Workers Builds** project (modern
-Cloudflare provisions "Pages" sign-ups on the Workers platform). Pushing to
-`main` deploys to production; any other branch gets a preview URL.
+Served at **cheevers.blog** via the self-hosted stack in
+[docker_stuff](https://github.com/icefisher225/docker_stuff), not Cloudflare
+Workers Builds — `wrangler.jsonc` is left over from the template this repo was
+forked from and is unused here.
 
-Each build does two steps:
+`docker_stuff`'s `sites/cheevers.blog/` builds this repo in a container
+(`sites/cheevers.blog/Dockerfile` runs `npm run build`, compiling `src/*.ts`
+into `public/js/`, then bakes `public/` into an nginx image) and serves it
+behind the reverse proxy. See `docs/auto-deploy.md` and `docs/adding-a-site.md`
+in that repo for how deploys are triggered.
 
-1. **Build command** `npm run build` runs `tsc`, compiling `src/*.ts` into
-   `public/js/`.
-2. **Deploy command** (`npx wrangler deploy` on `main`,
-   `npx wrangler versions upload` on other branches) reads `wrangler.jsonc` and
-   uploads the static assets.
-
-`wrangler.jsonc` (at the repo root) is what makes this work. It declares an
-assets-only deploy (`assets.directory: "./public"`, no Worker script), so
-Cloudflare serves the `public/` directory. Without it, the deploy step fails
-with "Missing entry-point to Worker script or to assets directory".
-
-The dashboard build/deploy commands are the Workers Builds defaults, so the
-only configuration that lives in this repo is `wrangler.jsonc` plus the
-`build` script in `package.json`. Note: a Workers Builds project has no
-"Build output directory" field; the deploy target comes from `wrangler.jsonc`.
+Pushing to `main` here fires a GitHub webhook to `https://hooks.rfcb.cloud/`,
+the same endpoint `docker_stuff` itself uses, which triggers a rebuild of just
+this site within a couple of minutes (near-instant when the webhook fires,
+with a 2-minute poll as a fallback).

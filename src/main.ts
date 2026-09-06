@@ -47,8 +47,70 @@ function setCurrentYear(): void {
   if (el) el.textContent = String(new Date().getFullYear());
 }
 
+/**
+ * Wire up the homepage photo gallery: prev/next buttons, dot navigation, and
+ * autoplay. A no-op on every other page, since none of them have [data-gallery].
+ */
+function setupGallery(): void {
+  const root = document.querySelector<HTMLElement>("[data-gallery]");
+  const track = root?.querySelector<HTMLElement>("[data-gallery-track]");
+  if (!root || !track) return;
+
+  const slideCount = track.children.length;
+  const dots = Array.from(
+    root.querySelectorAll<HTMLButtonElement>("[data-gallery-dot]"),
+  );
+  const prevBtn = root.querySelector<HTMLButtonElement>("[data-gallery-prev]");
+  const nextBtn = root.querySelector<HTMLButtonElement>("[data-gallery-next]");
+
+  const AUTOPLAY_MS = 10000;
+  // Respect the same reduced-motion signal the rest of the site defers to;
+  // manual prev/next/dot navigation still works either way.
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  let index = 0;
+  let timer: ReturnType<typeof setInterval> | null = null;
+
+  function show(next: number): void {
+    index = (next + slideCount) % slideCount;
+    track!.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((dot, dotIndex) => {
+      dot.classList.toggle("is-active", dotIndex === index);
+    });
+  }
+
+  function restartAutoplay(): void {
+    if (prefersReducedMotion) return;
+    if (timer) clearInterval(timer);
+    timer = setInterval(() => show(index + 1), AUTOPLAY_MS);
+  }
+
+  prevBtn?.addEventListener("click", () => {
+    show(index - 1);
+    restartAutoplay();
+  });
+
+  nextBtn?.addEventListener("click", () => {
+    show(index + 1);
+    restartAutoplay();
+  });
+
+  dots.forEach((dot, dotIndex) => {
+    dot.addEventListener("click", () => {
+      show(dotIndex);
+      restartAutoplay();
+    });
+  });
+
+  show(0);
+  restartAutoplay();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupMobileNav();
   markCurrentNavLink();
   setCurrentYear();
+  setupGallery();
 });

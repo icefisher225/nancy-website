@@ -259,6 +259,113 @@ main {
   margin-top: 0;
 }
 
+/* ---- Homepage gallery ---------------------------------------------------- */
+
+.gallery-section {
+  padding-block: 0 var(--space-lg);
+}
+
+.gallery {
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.gallery-viewport {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  aspect-ratio: 4 / 3;
+  background: var(--color-surface);
+}
+
+.gallery-track {
+  display: flex;
+  height: 100%;
+  /* JS sets transform: translateX(-N%) per slide; this only smooths that. */
+  transition: transform 0.5s ease;
+}
+
+.gallery-slide {
+  flex: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  position: relative;
+}
+
+.gallery-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-slide figcaption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  margin: 0;
+  padding: var(--space-md) var(--space-sm) var(--space-sm);
+  /* Fixed dark scrim regardless of theme -- this sits on top of a photo, not
+     the page background, so it needs to stay readable either way. */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: #fff;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+.gallery-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.gallery-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.gallery-prev {
+  left: var(--space-xs);
+}
+
+.gallery-next {
+  right: var(--space-xs);
+}
+
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: var(--space-sm);
+}
+
+.gallery-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-border);
+  cursor: pointer;
+}
+
+.gallery-dot.is-active {
+  background: var(--color-accent);
+}
+
 /* ---- Article list ------------------------------------------------------- */
 
 .article-list {

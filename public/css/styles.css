@@ -301,8 +301,10 @@ main {
 }
 
 /* Portrait photos in a 4:3 slide: show the whole frame with bars on the
-   sides instead of cropping the edges off. */
-.gallery-img-contain {
+   sides instead of cropping the edges off.
+   Needs the extra ".gallery-slide img" prefix to out-specificity the cover
+   rule above (class+element beats a bare class). */
+.gallery-slide img.gallery-img-contain {
   object-fit: contain;
   /* Matches .gallery-viewport's own background so the letterbox bars read as
      one surface rather than a mismatched color peeking through. */

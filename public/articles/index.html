@@ -47,11 +47,11 @@
           Each card is text on the left and an optional thumbnail on the right.
           The .article-card-body wrapper is what lets the two sit side by side.
 
-          Thumbnails are alt="" on purpose: they repeat the article's lead image
-          and the heading link right beside them already says what the article
-          is, so describing them again would just make screen readers read every
-          entry twice. A card with no thumbnail simply lets the text run full
-          width -- see "Good News for Amtrak!", which has no images.
+          No post carries a thumbnail at the moment, so every card runs the text
+          full width. If you add one, give it alt="" on purpose: it repeats the
+          article's lead image, and the heading link right beside it already
+          says what the article is, so describing it again would just make
+          screen readers read every entry twice.
         -->
         <ul class="article-list">
           <li class="article-card">
@@ -71,17 +71,6 @@
                 After almost 9 months of planning, we are down to the last four days.
               </p>
             </div>
-          </li>
-          <li class="article-card">
-            <div class="article-card-body">
-              <h2><a href="/articles/20240514_amtrak_hudson_line/">Amtrak: The Hudson Line</a></h2>
-              <time datetime="2024-05-14">May 14, 2024</time>
-              <p>
-                An article on the Amtrak Hudson Line.
-              </p>
-            </div>
-            <img class="article-thumb" src="/articles/20240514_amtrak_hudson_line/thumb-hudsonline.jpg"
-                 alt="" width="640" height="400" loading="lazy" decoding="async">
           </li>
         </ul>
       </section>

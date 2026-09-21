@@ -311,6 +311,14 @@ main {
   background: var(--color-surface);
 }
 
+/* The article pages put a gallery inside .prose, whose img rule adds vertical
+   margin to every photo. Inside a slide that margin pushes the image down off
+   the top of the fixed-height viewport and leaves a bar above it, so it is
+   cleared here. */
+.prose .gallery-slide img {
+  margin-block: 0;
+}
+
 .gallery-slide figcaption {
   position: absolute;
   inset-inline: 0;

@@ -100,7 +100,8 @@ a:hover {
   text-decoration: underline;
 }
 
-img {
+img,
+video {
   max-width: 100%;
   height: auto;
   display: block;
@@ -479,7 +480,8 @@ main {
    Symmetric, so the image is not lopsided: the preceding paragraph's smaller
    bottom margin collapses into this one rather than stacking on top of it,
    which leaves equal space above and below. */
-.prose img {
+.prose img,
+.prose video {
   margin-block: var(--space-md);
 }
 
